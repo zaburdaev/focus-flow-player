@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="referrer" content="strict-origin-when-cross-origin">
     <title>Focus Flow – Pomodoro & Audio</title>
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <style>
         :root {
             --bg: #050617;
@@ -473,8 +473,8 @@
             color: #e5e7eb;
         }
 
-        /* NOISES */
-        .noise-section-header {
+        /* FREQUENCIES */
+        .freq-section-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -483,7 +483,7 @@
             gap: 8px;
         }
 
-        .noise-title {
+        .freq-title {
             display: flex;
             align-items: center;
             gap: 6px;
@@ -491,26 +491,26 @@
             font-weight: 500;
         }
 
-        .noise-sub {
+        .freq-sub {
             font-size: 11px;
             color: var(--text-soft);
             text-align: right;
         }
 
-        .noise-grid {
+        .freq-grid {
             display: grid;
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 8px;
         }
 
         @media (min-width: 860px) {
-            .noise-grid {
-                grid-template-columns: repeat(4, minmax(0, 1fr));
+            .freq-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
             }
         }
 
-        .noise-card {
-            padding: 9px 10px 8px;
+        .freq-card {
+            padding: 10px 12px 10px;
             border-radius: 18px;
             background: radial-gradient(circle at 10% 0, rgba(148, 163, 184, 0.45), rgba(15, 23, 42, 0.95));
             border: 1px solid rgba(148, 163, 184, 0.5);
@@ -520,42 +520,44 @@
             display: flex;
             flex-direction: column;
             align-items: stretch;
-            gap: 4px;
+            gap: 6px;
             backdrop-filter: blur(16px) saturate(170%);
         }
 
-        .noise-top {
+        .freq-top {
             display: flex;
             align-items: center;
             justify-content: space-between;
             gap: 6px;
         }
 
-        .noise-info {
+        .freq-info {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
 
-        .noise-icon {
-            font-size: 18px;
+        .freq-icon {
+            font-size: 20px;
         }
 
-        .noise-label-main {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
+        .freq-label-main {
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.08em;
         }
 
-        .noise-label-sub {
+        .freq-label-sub {
             font-size: 10px;
             color: var(--text-soft);
+            line-height: 1.3;
+            margin-top: 2px;
         }
 
-        .noise-toggle-btn {
+        .freq-toggle-btn {
             border-radius: 999px;
             border: 1px solid rgba(148, 163, 184, 0.8);
-            padding: 4px 9px;
+            padding: 5px 11px;
             font-size: 10px;
             letter-spacing: 0.12em;
             text-transform: uppercase;
@@ -563,16 +565,17 @@
             background: rgba(15, 23, 42, 0.9);
             color: var(--text-soft);
             transition: all 0.16s ease;
+            white-space: nowrap;
         }
 
-        .noise-toggle-btn-active {
+        .freq-toggle-btn-active {
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.96), rgba(129, 140, 248, 0.96));
             color: #f9fafb;
             border-color: rgba(191, 219, 254, 0.96);
             box-shadow: 0 0 14px rgba(59, 130, 246, 0.8);
         }
 
-        .noise-slider-wrap {
+        .freq-slider-wrap {
             margin-top: 4px;
             display: flex;
             align-items: center;
@@ -581,11 +584,11 @@
             color: var(--text-soft);
         }
 
-        .noise-slider-wrap span {
-            min-width: 42px;
+        .freq-slider-wrap span {
+            min-width: 50px;
         }
 
-        .noise-slider {
+        .freq-slider {
             -webkit-appearance: none;
             appearance: none;
             width: 100%;
@@ -596,7 +599,7 @@
             overflow: hidden;
         }
 
-        .noise-slider::-webkit-slider-thumb {
+        .freq-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
             width: 12px;
@@ -607,23 +610,25 @@
             cursor: pointer;
         }
 
-        .noise-slider::-moz-range-thumb {
+        .freq-slider::-moz-range-thumb {
             width: 12px;
             height: 12px;
             border-radius: 50%;
             background: linear-gradient(135deg, #3b82f6, #a855f7);
             box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.4);
             cursor: pointer;
+            border: none;
         }
 
-        .noise-note {
+        .freq-note {
             margin-top: 10px;
             font-size: 11px;
             color: var(--text-soft);
             text-align: center;
+            line-height: 1.5;
         }
 
-        .noise-note span {
+        .freq-note span {
             color: #e5e7eb;
         }
 
@@ -668,7 +673,7 @@
                         FOCUS FLOW • POMODORO
                     </div>
                     <div class="panel-subtitle" id="modeSubtitle">
-                        25 минут глубокого фокуса • нажмите круг или кнопку
+                        25 minutes deep focus • click circle or button
                     </div>
                 </header>
 
@@ -676,13 +681,13 @@
                     <!-- MODES -->
                     <div class="mode-switcher" id="modeSwitcher">
                         <button class="mode-btn mode-btn-active" data-mode="focus">
-                            <span class="mode-dot"></span> ФОКУС • 25
+                            <span class="mode-dot"></span> FOCUS • 25
                         </button>
                         <button class="mode-btn" data-mode="short">
-                            <span class="mode-dot"></span> ПЕРЕРЫВ • 5
+                            <span class="mode-dot"></span> BREAK • 5
                         </button>
                         <button class="mode-btn" data-mode="long">
-                            <span class="mode-dot"></span> ПЕРЕРЫВ • 15
+                            <span class="mode-dot"></span> BREAK • 15
                         </button>
                     </div>
 
@@ -699,9 +704,9 @@
                         </svg>
 
                         <div class="timer-display">
-                            <div class="timer-label" id="sessionLabel">СЕАНС ФОКУСА</div>
+                            <div class="timer-label" id="sessionLabel">FOCUS SESSION</div>
                             <div class="timer-time" id="timerText">25:00</div>
-                            <div class="timer-status" id="timerStatus"><span>Готов к старту</span></div>
+                            <div class="timer-status" id="timerStatus"><span>Ready to start</span></div>
                         </div>
                     </div>
 
@@ -709,15 +714,15 @@
                     <div class="timer-controls">
                         <button class="btn btn-primary" id="startPauseBtn">
                             <span class="btn-icon" id="startPauseIcon">▶</span>
-                            <span id="startPauseText">СТАРТ</span>
+                            <span id="startPauseText">START</span>
                         </button>
                         <button class="btn" id="resetBtn">
-                            <span class="btn-icon">⟲</span> СБРОС
+                            <span class="btn-icon">⟲</span> RESET
                         </button>
                     </div>
 
                     <p class="hint">
-                        Совет: <span>клик по кругу</span> также запускает / ставит на паузу таймер.
+                        Tip: <span>click the circle</span> to start / pause the timer.
                     </p>
                 </div>
             </div>
@@ -729,10 +734,10 @@
                 <header class="panel-header">
                     <div class="panel-title">
                         <span class="panel-title-dot"></span>
-                        AUDIO ZONE • МУЗЫКА &amp; ШУМЫ
+                        AUDIO ZONE • MUSIC & FREQUENCIES
                     </div>
                     <div class="panel-subtitle">
-                        YouTube трансляция + Web Audio генераторы шумов
+                        YouTube live stream + Healing frequency generators
                     </div>
                 </header>
 
@@ -742,14 +747,15 @@
                         style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;gap:8px;">
                         <div style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:500;">
                             <span style="font-size:18px;">🎧</span>
-                            Фоновая музыка (YouTube Live)
+                            Background Music (YouTube Live)
                         </div>
                         <div style="font-size:11px;color:var(--text-soft);">
-                            Управление — <strong>внутри плеера</strong>
+                            Controls — <strong>inside player</strong>
                         </div>
                     </div>
 
                     <div class="youtube-wrapper">
+                        <!-- Live stream lofi hip hop radio via GitHub Pages relay -->
                         <iframe src="https://zaburdaev.github.io/focus-flow-player/yt-relay.html?v=jfKfPfyJRdk"
                             title="lofi hip hop radio - beats to relax/study to"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -758,103 +764,103 @@
                     </div>
 
                     <p class="music-caption">
-                        Нажмите <strong>Play</strong> внутри видео для запуска фоновой музыки.
-                        Это живая трансляция <strong>lofi hip hop radio – beats to relax/study to</strong> 24/7.
+                        Press <strong>Play</strong> inside the video to start background music.
+                        This is a live stream <strong>lofi hip hop radio – beats to relax/study to</strong> 24/7.
                     </p>
                 </div>
 
-                <!-- NOISES -->
-                <div class="noise-section-header">
-                    <div class="noise-title">
-                        <span>🧊</span>
-                        <span>Звуки концентрации (Web Audio API)</span>
+                <!-- HEALING FREQUENCIES -->
+                <div class="freq-section-header">
+                    <div class="freq-title">
+                        <span>🎵</span>
+                        <span>Healing Frequencies (Web Audio API)</span>
                     </div>
-                    <div class="noise-sub">
-                        Активен только <strong>один</strong> шум одновременно
-                    </div>
-                </div>
-
-                <div class="noise-grid" id="noiseGrid">
-                    <!-- White noise -->
-                    <div class="noise-card" data-noise="white">
-                        <div class="noise-top">
-                            <div class="noise-info">
-                                <div class="noise-icon">☁️</div>
-                                <div>
-                                    <div class="noise-label-main">WHITE NOISE</div>
-                                    <div class="noise-label-sub">мягкий, ровный фон</div>
-                                </div>
-                            </div>
-                            <button class="noise-toggle-btn">ON</button>
-                        </div>
-                        <div class="noise-slider-wrap">
-                            <span>Громк.</span>
-                            <input class="noise-slider" type="range" min="0" max="100" value="40">
-                        </div>
-                    </div>
-
-                    <!-- Pink noise -->
-                    <div class="noise-card" data-noise="pink">
-                        <div class="noise-top">
-                            <div class="noise-info">
-                                <div class="noise-icon">🌧️</div>
-                                <div>
-                                    <div class="noise-label-main">PINK NOISE</div>
-                                    <div class="noise-label-sub">более тёплый, как дождь</div>
-                                </div>
-                            </div>
-                            <button class="noise-toggle-btn">ON</button>
-                        </div>
-                        <div class="noise-slider-wrap">
-                            <span>Громк.</span>
-                            <input class="noise-slider" type="range" min="0" max="100" value="45">
-                        </div>
-                    </div>
-
-                    <!-- Brown noise -->
-                    <div class="noise-card" data-noise="brown">
-                        <div class="noise-top">
-                            <div class="noise-info">
-                                <div class="noise-icon">🧠</div>
-                                <div>
-                                    <div class="noise-label-main">BROWN NOISE</div>
-                                    <div class="noise-label-sub">низкий, "глубокий" шум</div>
-                                </div>
-                            </div>
-                            <button class="noise-toggle-btn">ON</button>
-                        </div>
-                        <div class="noise-slider-wrap">
-                            <span>Громк.</span>
-                            <input class="noise-slider" type="range" min="0" max="100" value="35">
-                        </div>
-                    </div>
-
-                    <!-- Ocean / Cafe -->
-                    <div class="noise-card" data-noise="ocean">
-                        <div class="noise-top">
-                            <div class="noise-info">
-                                <div class="noise-icon">🌊</div>
-                                <div>
-                                    <div class="noise-label-main">OCEAN / CAFE</div>
-                                    <div class="noise-label-sub">волны + фоновое движение</div>
-                                </div>
-                            </div>
-                            <button class="noise-toggle-btn">ON</button>
-                        </div>
-                        <div class="noise-slider-wrap">
-                            <span>Громк.</span>
-                            <input class="noise-slider" type="range" min="0" max="100" value="40">
-                        </div>
+                    <div class="freq-sub">
+                        Only <strong>one</strong> frequency active at a time
                     </div>
                 </div>
 
-                <p class="noise-note">
-                    ✨ Генерация идёт <span>математически в реальном времени</span> через Web Audio API.
-                    Нажмите на шум для включения / выключения, а ползунком отрегулируйте <span>громкость</span>.
+                <div class="freq-grid" id="freqGrid">
+                    <!-- 432 Hz -->
+                    <div class="freq-card" data-freq="432">
+                        <div class="freq-top">
+                            <div class="freq-info">
+                                <div class="freq-icon">🌿</div>
+                                <div>
+                                    <div class="freq-label-main">432 Hz</div>
+                                    <div class="freq-label-sub">Universal frequency for calm & well-being</div>
+                                </div>
+                            </div>
+                            <button class="freq-toggle-btn">ON</button>
+                        </div>
+                        <div class="freq-slider-wrap">
+                            <span>Volume</span>
+                            <input class="freq-slider" type="range" min="0" max="100" value="40">
+                        </div>
+                    </div>
+
+                    <!-- 528 Hz -->
+                    <div class="freq-card" data-freq="528">
+                        <div class="freq-top">
+                            <div class="freq-info">
+                                <div class="freq-icon">💚</div>
+                                <div>
+                                    <div class="freq-label-main">528 Hz</div>
+                                    <div class="freq-label-sub">Reduces stress in endocrine & nervous systems</div>
+                                </div>
+                            </div>
+                            <button class="freq-toggle-btn">ON</button>
+                        </div>
+                        <div class="freq-slider-wrap">
+                            <span>Volume</span>
+                            <input class="freq-slider" type="range" min="0" max="100" value="40">
+                        </div>
+                    </div>
+
+                    <!-- 852 Hz -->
+                    <div class="freq-card" data-freq="852">
+                        <div class="freq-top">
+                            <div class="freq-info">
+                                <div class="freq-icon">🧠</div>
+                                <div>
+                                    <div class="freq-label-main">852 Hz</div>
+                                    <div class="freq-label-sub">Boosts dopamine, syncs brain hemispheres</div>
+                                </div>
+                            </div>
+                            <button class="freq-toggle-btn">ON</button>
+                        </div>
+                        <div class="freq-slider-wrap">
+                            <span>Volume</span>
+                            <input class="freq-slider" type="range" min="0" max="100" value="40">
+                        </div>
+                    </div>
+
+                    <!-- 285 Hz -->
+                    <div class="freq-card" data-freq="285">
+                        <div class="freq-top">
+                            <div class="freq-info">
+                                <div class="freq-icon">✨</div>
+                                <div>
+                                    <div class="freq-label-main">285 Hz</div>
+                                    <div class="freq-label-sub">Tissue & organ restoration, healing</div>
+                                </div>
+                            </div>
+                            <button class="freq-toggle-btn">ON</button>
+                        </div>
+                        <div class="freq-slider-wrap">
+                            <span>Volume</span>
+                            <input class="freq-slider" type="range" min="0" max="100" value="40">
+                        </div>
+                    </div>
+                </div>
+
+                <p class="freq-note">
+                    ✨ Pure sine wave tones generated <span>mathematically in real-time</span> via Web Audio API.
+                    Click a frequency to toggle ON/OFF, adjust <span>volume</span> with the slider.
                 </p>
 
                 <div class="footer-note">
-                    Timer &amp; Audio — <span>Focus Flow</span> прототип (single‑file, offline‑friendly).
+                    Timer & Audio — <span>Focus Flow</span> prototype (single‑file, offline‑friendly).
                 </div>
             </div>
         </section>
@@ -863,9 +869,9 @@
     <script>
         // ---------- TIMER MODES ----------
         const MODES = {
-            focus: { seconds: 25 * 60, label: 'СЕАНС ФОКУСА', subtitle: '25 минут глубокого фокуса • нажмите круг или кнопку' },
-            short: { seconds: 5 * 60, label: 'КОРОТКИЙ ПЕРЕРЫВ', subtitle: '5 минут восстановления • отличный момент размяться' },
-            long: { seconds: 15 * 60, label: 'ДЛИННЫЙ ПЕРЕРЫВ', subtitle: '15 минут отдыха • перезагрузите внимание' }
+            focus: { seconds: 25 * 60, label: 'FOCUS SESSION', subtitle: '25 minutes deep focus • click circle or button' },
+            short: { seconds: 5 * 60, label: 'SHORT BREAK', subtitle: '5 minutes recovery • great time to stretch' },
+            long: { seconds: 15 * 60, label: 'LONG BREAK', subtitle: '15 minutes rest • recharge your attention' }
         };
 
         let currentModeKey = 'focus';
@@ -908,20 +914,20 @@
             if (state === 'paused') timerStatusEl.classList.add('paused');
             if (state === 'finished') timerStatusEl.classList.add('finished');
 
-            let text = 'Готов к старту';
-            if (state === 'running') text = 'Фокусировка';
-            if (state === 'paused') text = 'Пауза';
-            if (state === 'finished') text = 'Готово! Перерыв';
+            let text = 'Ready to start';
+            if (state === 'running') text = 'Focusing';
+            if (state === 'paused') text = 'Paused';
+            if (state === 'finished') text = 'Done! Take a break';
 
             timerStatusEl.innerHTML = `<span>${text}</span>`;
         }
         function setStartButton(running) {
             if (running) {
                 startPauseIcon.textContent = '⏸';
-                startPauseText.textContent = 'ПАУЗА';
+                startPauseText.textContent = 'PAUSE';
             } else {
                 startPauseIcon.textContent = '▶';
-                startPauseText.textContent = 'СТАРТ';
+                startPauseText.textContent = 'START';
             }
         }
 
@@ -946,7 +952,6 @@
                 else btn.classList.remove('mode-btn-active');
             });
 
-            // если до этого таймер бежал – автозапуск в новом режиме
             if (wasRunning) startTimer();
         }
 
@@ -1021,7 +1026,7 @@
         function initializeAudioContext() {
             const AC = window.AudioContext || window.webkitAudioContext;
             if (!AC) {
-                console.warn('Web Audio API не поддерживается этим браузером.');
+                console.warn('Web Audio API not supported by this browser.');
                 return;
             }
             if (!audioCtx) {
@@ -1054,103 +1059,74 @@
             osc.stop(now + 1.7);
         }
 
-        // ---------- NOISE GENERATORS ----------
-        const noiseCards = Array.from(document.querySelectorAll('.noise-card'));
-        let currentNoiseType = null;
-        let currentNoiseNode = null; // { source, gain }
+        // ---------- HEALING FREQUENCY GENERATORS ----------
+        const freqCards = Array.from(document.querySelectorAll('.freq-card'));
+        let currentFreqType = null;
+        let currentFreqNode = null; // { osc, gain }
 
-        function createNoiseBuffer(type) {
-            const sampleRate = audioCtx.sampleRate;
-            const bufferSize = 2 * sampleRate;
-            const buffer = audioCtx.createBuffer(1, bufferSize, sampleRate);
-            const data = buffer.getChannelData(0);
-
-            let brownLast = 0.0;
-            let pinkLast = 0.0;
-
-            for (let i = 0; i < bufferSize; i++) {
-                const white = Math.random() * 2 - 1;
-
-                if (type === 'white') {
-                    data[i] = white * 0.45;
-                } else if (type === 'pink') {
-                    pinkLast = (pinkLast + 0.2 * white) * 0.98;
-                    data[i] = pinkLast * 0.9;
-                } else if (type === 'brown') {
-                    brownLast = (brownLast + 0.02 * white) / 1.02;
-                    data[i] = brownLast * 3.5 * 0.4;
-                } else if (type === 'ocean') {
-                    const slow = Math.sin(i / 8000) * 0.4 + 0.8;
-                    const ripple = Math.sin(i / 260) * 0.18 + 0.85;
-                    data[i] = white * 0.4 * slow * ripple;
-                }
-            }
-            return buffer;
-        }
-
-        function startNoise(type, initialGain) {
+        function startFrequency(freqHz, gainValue) {
             if (!audioCtx) return null;
-            const buffer = createNoiseBuffer(type);
-            const source = audioCtx.createBufferSource();
+            const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
 
-            gain.gain.value = initialGain;
-            source.buffer = buffer;
-            source.loop = true;
-            source.connect(gain);
-            gain.connect(audioCtx.destination);
-            source.start();
+            osc.type = 'sine'; // pure sine wave for healing frequencies
+            osc.frequency.value = freqHz;
+            gain.gain.value = gainValue;
 
-            return { source, gain };
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.start();
+            return { osc, gain };
         }
 
-        function stopCurrentNoise() {
-            if (currentNoiseNode && currentNoiseNode.source) {
-                try { currentNoiseNode.source.stop(); } catch (e) { }
+        function stopCurrentFrequency() {
+            if (currentFreqNode && currentFreqNode.osc) {
+                try { currentFreqNode.osc.stop(); } catch (e) { }
             }
-            currentNoiseNode = null;
-            currentNoiseType = null;
-            noiseCards.forEach(card => {
-                const btn = card.querySelector('.noise-toggle-btn');
-                btn.classList.remove('noise-toggle-btn-active');
+            currentFreqNode = null;
+            currentFreqType = null;
+            freqCards.forEach(card => {
+                const btn = card.querySelector('.freq-toggle-btn');
+                btn.classList.remove('freq-toggle-btn-active');
             });
         }
 
-        function toggleNoise(type, gainValue, cardEl) {
+        function toggleFrequency(freqHz, gainValue, cardEl) {
             if (!audioCtxInitialized) initializeAudioContext();
             if (!audioCtx) return;
 
-            const normalizedGain = gainValue / 100 * 0.8; // макс 0.8, чтобы не было громко
+            const normalizedGain = gainValue / 100 * 0.5; // max 0.5 for comfortable listening
 
-            if (currentNoiseType === type) {
-                stopCurrentNoise();
+            if (currentFreqType === freqHz) {
+                stopCurrentFrequency();
                 return;
             }
 
-            stopCurrentNoise();
-            currentNoiseNode = startNoise(type, normalizedGain);
-            currentNoiseType = type;
+            stopCurrentFrequency();
+            currentFreqNode = startFrequency(freqHz, normalizedGain);
+            currentFreqType = freqHz;
 
-            noiseCards.forEach(card => {
-                const btn = card.querySelector('.noise-toggle-btn');
-                if (card.dataset.noise === type) btn.classList.add('noise-toggle-btn-active');
-                else btn.classList.remove('noise-toggle-btn-active');
+            freqCards.forEach(card => {
+                const btn = card.querySelector('.freq-toggle-btn');
+                if (card.dataset.freq === String(freqHz)) btn.classList.add('freq-toggle-btn-active');
+                else btn.classList.remove('freq-toggle-btn-active');
             });
         }
 
-        noiseCards.forEach(card => {
-            const type = card.dataset.noise;
-            const toggleBtn = card.querySelector('.noise-toggle-btn');
-            const slider = card.querySelector('.noise-slider');
+        freqCards.forEach(card => {
+            const freqHz = Number(card.dataset.freq);
+            const toggleBtn = card.querySelector('.freq-toggle-btn');
+            const slider = card.querySelector('.freq-slider');
 
             toggleBtn.addEventListener('click', () => {
-                toggleNoise(type, Number(slider.value), card);
+                toggleFrequency(freqHz, Number(slider.value), card);
             });
 
             slider.addEventListener('input', () => {
-                if (currentNoiseType === type && currentNoiseNode && currentNoiseNode.gain) {
-                    const g = Number(slider.value) / 100 * 0.8;
-                    currentNoiseNode.gain.gain.value = g;
+                if (currentFreqType === freqHz && currentFreqNode && currentFreqNode.gain) {
+                    const g = Number(slider.value) / 100 * 0.5;
+                    currentFreqNode.gain.gain.value = g;
                 }
             });
         });
